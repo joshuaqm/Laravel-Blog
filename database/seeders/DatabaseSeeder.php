@@ -14,19 +14,28 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
+
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Run the roles and permissions seeder first
+        $this->call(RoleAndPermissionSeeder::class);
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Joshua M',
             'email' => 'joshuaqm@correo.com',
             'password' => bcrypt('proteco123'),
         ]);
+        $user->assignRole('super-admin');
+
+        $user = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@correo.com',
+            'password' => bcrypt('proteco123'),
+        ]);
+        $user->assignRole('admin');
 
         Category::factory(20)->create();
         Post::factory(100)->create();
         Tag::factory(20)->create();
-    
     }
 }
