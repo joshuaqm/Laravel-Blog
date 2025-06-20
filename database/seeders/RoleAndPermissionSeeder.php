@@ -15,27 +15,21 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $roleSuperAdmin = Role::firstOrCreate([
-            'name' => 'super-admin'
-        ]);
-        $roleAdmin = Role::firstOrCreate([
-            'name' => 'admin'
+        // Permisos para Posts (coinciden con los nombres de tus checkboxes)
+        Permission::firstOrCreate(['name' => 'posts.access']);
+        Permission::firstOrCreate(['name' => 'posts.read']);
+        Permission::firstOrCreate(['name' => 'posts.write']);
+
+        // Rol Super Admin (todos los permisos)
+        $roleSuperAdmin = Role::firstOrCreate(['name' => 'super-admin']);
+        $roleSuperAdmin->givePermissionTo([
+            'posts.access',
+            'posts.read',
+            'posts.write'
         ]);
 
-        Permission::firstOrCreate([
-            'name' => 'ver post'
-        ]);
-
-        Permission::firstOrCreate([
-            'name' => 'crear post'
-        ]);
-
-        Permission::firstOrCreate([
-            'name' => 'editar post'
-        ]);
-
-        $roleSuperAdmin->givePermissionTo('ver post');
-        $roleSuperAdmin->givePermissionTo('crear post');
-        $roleSuperAdmin->givePermissionTo('editar post');
+        // Rol Admin (solo lectura, por ejemplo)
+        $roleAdmin = Role::firstOrCreate(['name' => 'admin']);
+        $roleAdmin->givePermissionTo('posts.read');
     }
 }

@@ -6,8 +6,9 @@
         </flux:breadcrumbs>
 
         
-
-        <a href="{{ route('admin.posts.create') }}" class="btn btn-blue">Add Post</a>
+        @can('posts.write')
+            <a href="{{ route('admin.posts.create') }}" class="btn btn-blue">Add Post</a>
+        @endcan
     </div>
 
     <div class="relative overflow-x-auto">

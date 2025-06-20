@@ -1,4 +1,4 @@
-<x-layouts.app>
+<x-layouts.app :title="__('Users')">
     <div class="mb-8 flex justify-between items-center">
         <flux:breadcrumbs>
             <flux:breadcrumbs.item href="{{ route('dashboard') }}" icon="home" />
