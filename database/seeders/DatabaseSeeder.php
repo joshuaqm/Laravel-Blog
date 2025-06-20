@@ -25,25 +25,24 @@ class DatabaseSeeder extends Seeder
             'email' => 'joshuaqm@correo.com',
             'password' => bcrypt('proteco123'),
         ]);
-        $user->givePermissionTo('posts.access');
         $user->givePermissionTo('posts.read');
         $user->givePermissionTo('posts.write');
-        $user->givePermissionTo('tags.access');
         $user->givePermissionTo('tags.read');
         $user->givePermissionTo('tags.write');
-        $user->givePermissionTo('users.access');
         $user->givePermissionTo('users.read');
         $user->givePermissionTo('users.write');
+        $user->givePermissionTo('categories.read');
+        $user->givePermissionTo('categories.write');
 
         $user = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@correo.com',
             'password' => bcrypt('proteco123'),
         ]);
-        $user->givePermissionTo('categories.access');
         $user->givePermissionTo('categories.read');
         $user->givePermissionTo('categories.write');
-        $user->givePermissionTo('users.access');
+        $user->givePermissionTo('posts.read');
+        $user->givePermissionTo('posts.write');
 
 
         Category::factory(20)->create();

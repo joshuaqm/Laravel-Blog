@@ -78,7 +78,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $user = User::with( 'permissions')->findOrFail($user->id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -86,7 +87,28 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8',
+        ]);
+        $permissions = [];
+        foreach ($request->input('permissions', []) as $section => $types) {
+            foreach ($types as $type => $enabled) {
+                if ($enabled) {
+                    $permissions[] = "{$section}.{$type}";
+                }
+            }
+        }
+        $user->update($data);
+
+        $user->syncPermissions($permissions); // Asigna y sincroniza todos los permisos
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => '¡El usuario ha sido actualizado!',
+            'text' => 'Ahora puedes gestionar este usuario desde el panel de administración.',
+        ]);
+        return redirect()->route('admin.users.index');
     }
 
     /**

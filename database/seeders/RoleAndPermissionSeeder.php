@@ -18,7 +18,6 @@ class RoleAndPermissionSeeder extends Seeder
         $sections = ['posts', 'categories', 'tags', 'users']; // Agrega más secciones aquí
 
         foreach ($sections as $section) {
-            Permission::firstOrCreate(['name' => "{$section}.access"]);
             Permission::firstOrCreate(['name' => "{$section}.read"]);
             Permission::firstOrCreate(['name' => "{$section}.write"]);
         }
