@@ -14,6 +14,13 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function __construct()
+    // {
+    //     $this->middleware('can:crear post')->only(['create', 'store']);
+    //     $this->middleware('can:editar post')->only(['edit', 'update']);
+    //     $this->middleware('can:ver post')->only(['index', 'show']);
+    // }
+
     public function index()
     {
         $posts = Post::orderBy('id', 'desc')->paginate(10);
