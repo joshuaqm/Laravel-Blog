@@ -40,6 +40,14 @@
                 'current' => request()->routeIs('settings.appearance'),
             ],
         ],
+        'Management' => [
+            'Users' => [
+                'name' => 'Users',
+                'icon' => 'user',
+                'url' => route('admin.users.index'),
+                'current' => request()->routeIs('admin.users.*'),
+            ],
+        ],
     ];
 
 @endphp
