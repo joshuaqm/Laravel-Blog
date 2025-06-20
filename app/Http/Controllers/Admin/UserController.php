@@ -47,19 +47,15 @@ class UserController extends Controller
 
         // Asignar permisos desde los checkboxes
         $permissions = [];
-
-        if ($request->input('permissions.posts.access')) {
-            $permissions[] = 'posts.access';
-        }
-        if ($request->input('permissions.posts.read')) {
-            $permissions[] = 'posts.read';
-        }
-        if ($request->input('permissions.posts.write')) {
-            $permissions[] = 'posts.write';
+        foreach ($request->input('permissions', []) as $section => $types) {
+            foreach ($types as $type => $enabled) {
+                if ($enabled) {
+                    $permissions[] = "{$section}.{$type}";
+                }
+            }
         }
 
-        $user->syncPermissions($permissions); // Reemplaza todos los permisos existentes
-
+        $user->syncPermissions($permissions); // Asigna y sincroniza todos los permisos
 
         session()->flash('swal', [
             'icon' => 'success',

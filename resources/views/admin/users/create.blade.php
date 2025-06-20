@@ -45,6 +45,24 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="px-4 py-2 text-center">Categories</td>
+                            <td class="px-4 py-2">
+                                <div class="flex justify-center">
+                                    <flux:checkbox name="permissions[categories][access]" value="1" />
+                                </div>
+                            </td>
+                            <td class="px-4 py-2">
+                                <div class="flex justify-center">
+                                    <flux:checkbox name="permissions[categories][write]" value="1" />
+                                </div>
+                            </td>
+                            <td class="px-4 py-2">
+                                <div class="flex justify-center">
+                                    <flux:checkbox name="permissions[categories][read]" value="1" />
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

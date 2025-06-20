@@ -1,23 +1,37 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('categories', CategoryController::class);
-Route::middleware(['auth'])->group(function () {
-    // Rutas de lectura
-    Route::middleware('can:posts.access')->group(function () {
-        Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-        Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-    });
+$protectedSections = config('permissions.protected_sections');
 
-    // Rutas de escritura (agrupadas)
-    Route::middleware('can:posts.write')->group(function () {
-        Route::resource('posts', PostController::class)->except(['index', 'show']);
+// foreach ($protectedSections as $section => $config) {
+//     Route::middleware($config['middleware'])->group(function () use ($section, $config) {
+//         // Rutas de lectura
+//         Route::middleware("can:{$section}.read")->group(function () use ($section, $config) {
+//             Route::get("admin/{$section}", [$config['controller'], 'index'])->name("admin.{$section}.index");
+//             Route::get("admin/{$section}/{id}", [$config['controller'], 'show'])->name("admin.{$section}.show");
+//         });
+
+//         // Rutas de escritura
+//         Route::middleware("can:{$section}.write")->group(function () use ($section, $config) {
+//             Route::resource("admin/{$section}", $config['controller'])
+//                 ->except(['index', 'show'])
+//                 ->names("admin.{$section}");
+//         });
+//     });
+// }
+foreach ($protectedSections as $section => $config) {
+    Route::prefix('admin')->middleware($config['middleware'])->group(function () use ($section, $config) {
+        Route::resource($section, $config['controller'])
+            ->names("admin.{$section}")
+            ->middleware([
+                'index' => "can:{$section}.read",
+                'show' => "can:{$section}.read",
+                'create' => "can:{$section}.write",
+                'store' => "can:{$section}.write",
+                'edit' => "can:{$section}.write",
+                'update' => "can:{$section}.write",
+                'destroy' => "can:{$section}.write",
+            ]);
     });
-});
-Route::resource('users', UserController::class);
-Route::resource('tags', TagController::class);
+}
