@@ -16,6 +16,7 @@
         </div>
     </div> --}}
     <div class="py-12">
-        <livewire:create-post :title="'Hola mundo pasado desde la vista'" :user="'1'" />
+        {{-- <livewire:create-post :title="'Hola mundo pasado desde la vista'" :user="'1'" /> --}}
+        <livewire:contador />
     </div>
 </x-layouts.app>
