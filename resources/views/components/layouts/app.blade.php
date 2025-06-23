@@ -12,33 +12,22 @@
                 'icon' => 'funnel',
                 'url' => route('admin.categories.index'),
                 'current' => request()->routeIs('admin.categories.*'),
+                'can' => 'categories.read',
             ],
             [
                 'name' => 'Posts',
                 'icon' => 'newspaper',
                 'url' => route('admin.posts.index'),
                 'current' => request()->routeIs('admin.posts.*'),
+                'can' => 'posts.read',
             ],
             [
                 'name' => 'Tags',
                 'icon' => 'tag',
                 'url' => route('admin.tags.index'),
                 'current' => request()->routeIs('admin.tags.*'),
-            ],
-        ],
-        'Settings' => [
-            'Profile' => [
-                'name' => 'Profile',
-                'icon' => 'user',
-                'url' => route('settings.profile'),
-                'current' => request()->routeIs('settings.profile'),
-            ],
-            'Appereance' => [
-                'name' => 'Appereance',
-                'icon' => 'paint-brush',
-                'url' => route('settings.appearance'),
-                'current' => request()->routeIs('settings.appearance'),
-            ],
+                'can' => 'tags.read',
+            ],        
         ],
         'Management' => [
             'Users' => [
@@ -46,6 +35,7 @@
                 'icon' => 'user',
                 'url' => route('admin.users.index'),
                 'current' => request()->routeIs('admin.users.*'),
+                'can' => 'users.read',
             ],
         ],
     ];
@@ -87,9 +77,11 @@
                 @foreach ($groups as $group => $links)
                     <flux:navlist.group :heading="$group" class="grid">
                         @foreach ($links as $link)
-                            <flux:navlist.item :icon="$link['icon']" :href="$link['url']" :current="$link['current']" wire:navigate>
-                                {{ $link['name'] }}
-                            </flux:navlist.item>
+                            @can($link['can'] ?? true)
+                                <flux:navlist.item :icon="$link['icon']" :href="$link['url']" :current="$link['current']" wire:navigate>
+                                    {{ $link['name'] }}
+                                </flux:navlist.item>
+                            @endcan
                         @endforeach
                     </flux:navlist.group>
                 @endforeach
