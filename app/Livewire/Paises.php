@@ -17,7 +17,7 @@ class Paises extends Component
         'Venezuela',
     ];
 
-    public $pais, $active, $count;
+    public $pais, $active, $count, $open=true;
 
     public function save()
     {
