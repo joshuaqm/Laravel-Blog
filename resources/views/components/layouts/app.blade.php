@@ -63,6 +63,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @fluxAppearance
+        @livewireStyles
 
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
@@ -196,6 +197,6 @@
             </script>
         @endif
         @fluxScripts
-
+        @livewireScripts
     </body>
 </html>
