@@ -9,9 +9,13 @@ Route::redirect('/', '/login')->name('home');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
-Route::get('dashboard', CreatePost::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::get('dashboard', CreatePost::class)
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
+Route::get('dashboard', function () {
+    return view('dashboard'); // Esto cargará tu vista dashboard.blade.php
+})->middleware(['auth', 'verified'])
+  ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
