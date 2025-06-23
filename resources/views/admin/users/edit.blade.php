@@ -108,7 +108,7 @@
 
             <div class="flex justify-end">
                 <flux:button type="submit" class="mt-4 cursor-pointer" variant="primary" color="sky">
-                    Crear usuario
+                    Editar usuario
                 </flux:button>
             </div>
         </form>

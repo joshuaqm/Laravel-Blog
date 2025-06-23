@@ -60,6 +60,47 @@
             </tbody>
         </table>
     </div>
+    @push('js')
+        <script>
+            forms = document.querySelectorAll('.delete-form');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: "btn btn-success",
+                            cancelButton: "btn btn-danger"
+                        },
+                        buttonsStyling: false
+                    });
+                    swalWithBootstrapButtons.fire({
+                        title: "¿Estás seguro?",
+                        text: "¡No podrás revertir esto!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Sí, ¡elimínalo!",
+                        cancelButtonText: "No, ¡cancelar!",
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        } else if (
+                            /* Read more about handling dismissals below */
+                            result.dismiss === Swal.DismissReason.cancel
+                        ) {
+                            swalWithBootstrapButtons.fire({
+                                title: "Cancelado",
+                                text: "Tu archivo imaginario está a salvo :)",
+                                icon: "error"
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+    @endpush
     {{-- <div class="mt-4">
         {{ $user->links() }}
     </div> --}}

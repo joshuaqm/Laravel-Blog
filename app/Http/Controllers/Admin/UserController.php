@@ -116,6 +116,21 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if ($user->id === auth()->id()) {
+            session()->flash('swal', [
+                'icon' => 'error',
+                'title' => '¡No puedes eliminarte a ti mismo!',
+                'text' => 'Por favor, contacta al administrador del sistema si necesitas ayuda.',
+            ]);
+            return redirect()->route('admin.users.index');
+        }
+
+        $user->delete();
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => '¡El usuario ha sido eliminado!',
+            'text' => 'Ahora puedes gestionar los usuarios desde el panel de administración.',
+        ]);
+        return redirect()->route('admin.users.index');
     }
 }
