@@ -15,8 +15,12 @@
             <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
         </div>
     </div> --}}
-    <div class="py-12">
+    <div class="py-12 max-w-4xl justify-center mx-auto">
+        {{-- <livewire:counter /> --}}
+        {{-- <livewire:posts /> --}}
+        {{-- <livewire:create-post /> --}}
         {{-- <livewire:create-post :title="'Hola mundo pasado desde la vista'" :user="'1'" /> --}}
-        <livewire:paises />
+        {{-- <livewire:paises /> --}}
+        <livewire:formulario />
     </div>
 </x-layouts.app>
