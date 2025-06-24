@@ -2,7 +2,7 @@
     <div class="bg-white shadow rounded-lg p-6 dark:bg-neutral-700 mb-8">
         <form wire:submit.prevent="save" class="space-y-4">
             <div class="mb-4">
-                <x-input class="w-full" label="Nombre" name="nombre" type="text" wire:model="postCreate.title"
+                <x-input class="w-full" label="Nombre" name="nombre" type="text" wire:model.live="postCreate.title"
                     autocomplete="off" />
                 @error('postCreate.title') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>

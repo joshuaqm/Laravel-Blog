@@ -48,8 +48,9 @@ class PostEditForm extends Form
 
     public function update()
     {
-        $post = Post::find($this->post_id);
         $this->validate();
+
+        $post = Post::find($this->post_id);
         
         $post->update([
             'title' => $this->title,

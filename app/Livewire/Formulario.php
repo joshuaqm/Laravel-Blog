@@ -117,16 +117,15 @@ class Formulario extends Component
         // $this->reset(['post_edit_id', 'post_edit', 'open']);
         $this->postEdit->update();
         $this->posts = Post::orderBy('id', 'desc')->get();
-    }   
+    }
 
     public function destroy($post_id)
     {
         $post = Post::find($post_id);
-        if ($post) {
-            $post->tags()->detach();
-            $post->delete();
-            $this->posts = Post::orderBy('id', 'desc')->get();
-        }
+        $post->tags()->detach();
+        $post->delete();
+        $this->posts = Post::orderBy('id', 'desc')->get();
+        
     }
 
     public function render()
