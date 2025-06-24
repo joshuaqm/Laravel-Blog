@@ -4,13 +4,17 @@
             <div class="mb-4">
                 <x-input class="w-full" label="Nombre" name="nombre" type="text" wire:model.live="postCreate.title"
                     autocomplete="off" />
-                @error('postCreate.title') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                @error('postCreate.title')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mb-4">
                 <x-input class="w-full" label="Resumen" name="excerpt" type="text" wire:model="postCreate.excerpt"
                     autocomplete="off" />
-                @error('postCreate.excerpt') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                @error('postCreate.excerpt')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mb-4">
@@ -26,7 +30,9 @@
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </x-select>
-                @error('postCreate.category_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                @error('postCreate.category_id')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mb-4">
@@ -39,7 +45,9 @@
                         </li>
                     @endforeach
                 </ul>
-                @error('postCreate.selected_tags') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                @error('postCreate.selected_tags')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="flex justify-end">
@@ -79,35 +87,45 @@
 
             <div class="bg-gray-800 opacity-25 fixed inset-0"></div>
             <div class="relative z-50 w-full max-w-4xl px-4 my-12">
-                <div class="bg-white shadow rounded-lg p-6 dark:bg-neutral-700 mx-auto w-full max-h-[90vh] overflow-y-auto">
+                <div
+                    class="bg-white shadow rounded-lg p-6 dark:bg-neutral-700 mx-auto w-full max-h-[90vh] overflow-y-auto">
                     <form wire:submit.prevent="update" class="space-y-4">
                         <div class="mb-4">
-                            <x-input class="w-full" label="Nombre" name="nombre" type="text" wire:model="postEdit.title"
-                                autocomplete="off" />
-                            @error('postEdit.title') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <x-input class="w-full" label="Nombre" name="nombre" type="text"
+                                wire:model="postEdit.title" autocomplete="off" />
+                            @error('postEdit.title')
+                                <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
-                            <x-input class="w-full" label="Resumen" name="excerpt" type="text" wire:model="postEdit.excerpt"
-                                autocomplete="off" />
-                            @error('postEdit.excerpt') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <x-input class="w-full" label="Resumen" name="excerpt" type="text"
+                                wire:model="postEdit.excerpt" autocomplete="off" />
+                            @error('postEdit.excerpt')
+                                <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
                             <x-textarea class="w-full" label="Contenido" name="contenido" wire:model="postEdit.content">
 
                             </x-textarea>
-                            @error('postEdit.content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            @error('postEdit.content')
+                                <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
-                            <x-select class="w-full" label="Categoría" name="categoria" wire:model="postEdit.category_id">
+                            <x-select class="w-full" label="Categoría" name="categoria"
+                                wire:model="postEdit.category_id">
                                 <option value="" disabled>Seleccione una categoría</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </x-select>
-                            @error('postEdit.category_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            @error('postEdit.category_id')
+                                <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
@@ -119,7 +137,9 @@
                                             value="{{ $tag->id }}" />
                                     </li>
                                 @endforeach
-                                @error('postEdit.selected_tags') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                @error('postEdit.selected_tags')
+                                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                                @enderror
                             </ul>
                         </div>
 
@@ -266,5 +286,12 @@
             </x-button>
         </x-slot>
     </x-dialog-modal> --}}
-
+    @push('xd')
+        <script>
+            Livewire.on('post-created', function(comment) {
+                // Aquí puedes manejar la lógica después de que se haya creado un post
+                console.log(comment);
+            });
+        </script>
+    @endpush
 </div>

@@ -22,5 +22,10 @@
         {{-- <livewire:create-post :title="'Hola mundo pasado desde la vista'" :user="'1'" /> --}}
         {{-- <livewire:paises /> --}}
         <livewire:formulario />
+        
+        <div class="mt-8">
+            <livewire:comments />
+        </div>
+
     </div>
 </x-layouts.app>

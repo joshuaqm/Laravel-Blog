@@ -35,7 +35,7 @@ class Formulario extends Component
     {
         $this->categories = Category::all();
         $this->tags = Tag::all();
-        $this->posts = Post::orderBy('id', 'desc')->get();
+        $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
     }
 
     public function save()
@@ -74,7 +74,8 @@ class Formulario extends Component
 
         // $this->postCreate->reset();
         $this->postCreate->save();
-        $this->posts = Post::orderBy('id', 'desc')->get();
+        $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
+        $this->dispatch('post-created', 'Nuevo articulo creado ' . time());
         // return redirect()->route('admin.posts.index')->with('message', 'Post created successfully!');
     }
 
@@ -116,7 +117,9 @@ class Formulario extends Component
         // $post->tags()->sync($this->post_edit['selected_tags']);
         // $this->reset(['post_edit_id', 'post_edit', 'open']);
         $this->postEdit->update();
-        $this->posts = Post::orderBy('id', 'desc')->get();
+        $this->dispatch('post-created', 'Articulo actualizado ' . time());
+        $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
+
     }
 
     public function destroy($post_id)
@@ -124,8 +127,9 @@ class Formulario extends Component
         $post = Post::find($post_id);
         $post->tags()->detach();
         $post->delete();
-        $this->posts = Post::orderBy('id', 'desc')->get();
-        
+        $this->dispatch('post-created', 'Articulo eliminado ' . time());
+        $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
+
     }
 
     public function render()

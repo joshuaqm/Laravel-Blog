@@ -198,5 +198,7 @@
         @endif
         @fluxScripts
         @livewireScripts
+
+        @stack('xd')
     </body>
 </html>
