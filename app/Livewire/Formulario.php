@@ -31,6 +31,7 @@ class Formulario extends Component
     //         'selected_tags' => 'array',
     //     ];
     // }
+    //Ciclo de vida de un componente
     public function mount()
     {
         $this->categories = Category::all();
@@ -38,6 +39,13 @@ class Formulario extends Component
         $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
     }
 
+    public function updating($property, $value)
+    {
+        // dd('Updating property:', $property, 'with value:', $value);
+    }
+    public function hydrate(){
+        // dd('Hydrating component');
+    }
     public function save()
     {
         // $this->postCreate->slug = 'slug-default-' . time();
