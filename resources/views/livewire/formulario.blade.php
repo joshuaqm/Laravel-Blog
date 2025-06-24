@@ -83,17 +83,20 @@
                         <div class="mb-4">
                             <x-input class="w-full" label="Nombre" name="nombre" type="text" wire:model="post_edit.title"
                                 autocomplete="off" />
+                            @error('post_edit.title') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-4">
                             <x-input class="w-full" label="Resumen" name="excerpt" type="text" wire:model="post_edit.excerpt"
                                 autocomplete="off" />
+                            @error('post_edit.excerpt') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-4">
                             <x-textarea class="w-full" label="Contenido" name="contenido" wire:model="post_edit.content">
 
                             </x-textarea>
+                            @error('post_edit.content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-4">
@@ -103,6 +106,7 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </x-select>
+                            @error('post_edit.category_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-4">
@@ -114,6 +118,7 @@
                                             value="{{ $tag->id }}" />
                                     </li>
                                 @endforeach
+                                @error('post_edit.selected_tags') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                             </ul>
                         </div>
 

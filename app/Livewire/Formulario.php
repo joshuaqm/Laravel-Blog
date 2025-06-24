@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class Formulario extends Component
@@ -26,6 +27,16 @@ class Formulario extends Component
     ];
     public $open = false;
  
+    public function rules()
+    {
+        return [
+            'title' => 'required|min:3|max:255',
+            'excerpt' => 'required|min:10|max:255',
+            'content' => 'required|min:10',
+            'category_id' => 'required|exists:categories,id',
+            'selected_tags' => 'array',
+        ];
+    }
     public function mount()
     {
         $this->categories = Category::all();
@@ -35,13 +46,21 @@ class Formulario extends Component
 
     public function save()
     {
-        $this->validate([
-            'title' => 'required|min:3|max:255',
-            'excerpt' => 'required|min:10|max:255',
-            'content' => 'required|min:10',
-            'category_id' => 'required|exists:categories,id',
-            'selected_tags' => 'array',
-        ]);
+        $this->validate();
+        // $this->validate([
+        //     'title' => 'required|min:3|max:255',
+        //     'excerpt' => 'required|min:10|max:255',
+        //     'content' => 'required|min:10',
+        //     'category_id' => 'required|exists:categories,id',
+        //     'selected_tags' => 'array',
+        // ],
+        // [
+        //     'title.required' => 'El campo titulo es requerido.',
+        //     'title.min' => 'El campo titulo debe tener al menos 3 caracteres.',
+        // ],
+        // [
+        //     'category_id' => 'categoría',
+        // ]);
         $post = Post::create([
             'title' => $this->title,
             'slug' => 'slug-default-' . time(),
@@ -63,6 +82,7 @@ class Formulario extends Component
 
     public function edit($post_id)
     {
+        $this->resetValidation();
         $this->open = true;
         $this->post_edit_id = $post_id;
         $post = Post::find($post_id);
