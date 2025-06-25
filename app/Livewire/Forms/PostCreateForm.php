@@ -27,6 +27,9 @@ class PostCreateForm extends Form
     #[Validate('array')]
     public $selected_tags = [];
 
+    #[Rule('nullable|image|max:1024')]
+    public $image;
+
     public function save()
     {
         $this->slug = 'slug-default-' . time();
@@ -41,6 +44,11 @@ class PostCreateForm extends Form
         ]);
         $post->tags()->attach($this->selected_tags);
 
+        if ($this->image) {
+            $post->image_path = $this->image->store('posts2');
+            $post->save(); 
+        }
+        
         $this->reset();
     }
 }

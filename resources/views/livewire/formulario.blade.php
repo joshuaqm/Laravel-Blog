@@ -1,5 +1,12 @@
 <div>
     <div class="bg-white shadow rounded-lg p-6 dark:bg-neutral-700 mb-8">
+        @if ($postCreate->image)
+            <div class="mb-4">
+                <img src="{{ $postCreate->image->temporaryUrl() }}" alt="">
+            </div>
+        @endif
+
+
         <form wire:submit.prevent="save" class="space-y-4">
             <div class="mb-4">
                 <x-input class="w-full" label="Nombre" name="nombre" type="text" wire:model.live="postCreate.title"
@@ -33,6 +40,27 @@
                 @error('postCreate.category_id')
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror
+            </div>
+
+            <div class="mb-4">
+                <div x-data="{ uploading: false, progress: 0 }"
+                    x-on:livewire-upload-start="uploading = true"
+                    x-on:livewire-upload-finish="uploading = false"
+                    x-on:livewire-upload-cancel="uploading = false"
+                    x-on:livewire-upload-error="uploading = false"
+                    x-on:livewire-upload-progress="progress = $event.detail.progress">
+
+                    <input class="w-full border-2 p-2" label="Imagen" name="image" type="file"
+                        wire:model.live="postCreate.image" accept="image/*" />
+
+                    <div x-show="uploading" class="mt-2">
+                        <div class="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700">
+                            <div class="bg-blue-500 h-4 rounded-full transition-all duration-300"
+                                :style="'width: ' + progress + '%'"></div>
+                        </div>
+                        <div class="text-xs text-gray-600 mt-1 text-right" x-text="progress + '%'"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="mb-4">
@@ -107,7 +135,8 @@
                         </div>
 
                         <div class="mb-4">
-                            <x-textarea class="w-full" label="Contenido" name="contenido" wire:model.live="postEdit.content">
+                            <x-textarea class="w-full" label="Contenido" name="contenido"
+                                wire:model.live="postEdit.content">
 
                             </x-textarea>
                             @error('postEdit.content')
@@ -124,6 +153,14 @@
                                 @endforeach
                             </x-select>
                             @error('postEdit.category_id')
+                                <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <x-input class="w-full" label="Slug" name="slug" type="text"
+                                wire:model.live="postEdit.slug" autocomplete="off" />
+                            @error('postEdit.slug')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
                         </div>
