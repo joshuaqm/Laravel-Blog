@@ -38,6 +38,15 @@
                 'can' => 'users.read',
             ],
         ],
+        'Pruebas' => [
+            'Prueba' => [
+                'name' => 'Prueba',
+                'icon' => 'rectangle-stack',
+                'url' => route('prueba'),
+                'current' => request()->routeIs('prueba'),
+                'can' => 'users.read',
+            ],
+        ],
     ];
 
 @endphp
@@ -79,7 +88,7 @@
                     <flux:navlist.group :heading="$group" class="grid">
                         @foreach ($links as $link)
                             @can($link['can'] ?? true)
-                                <flux:navlist.item :icon="$link['icon']" :href="$link['url']" :current="$link['current']" wire:navigate>
+                                <flux:navlist.item :icon="$link['icon']" :href="$link['url']" :current="$link['current']" wire:navigate.hover>
                                     {{ $link['name'] }}
                                 </flux:navlist.item>
                             @endcan
