@@ -92,7 +92,7 @@
                     <form wire:submit.prevent="update" class="space-y-4">
                         <div class="mb-4">
                             <x-input class="w-full" label="Nombre" name="nombre" type="text"
-                                wire:model="postEdit.title" autocomplete="off" />
+                                wire:model.live="postEdit.title" autocomplete="off" />
                             @error('postEdit.title')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
@@ -100,14 +100,14 @@
 
                         <div class="mb-4">
                             <x-input class="w-full" label="Resumen" name="excerpt" type="text"
-                                wire:model="postEdit.excerpt" autocomplete="off" />
+                                wire:model.live="postEdit.excerpt" autocomplete="off" />
                             @error('postEdit.excerpt')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <x-textarea class="w-full" label="Contenido" name="contenido" wire:model="postEdit.content">
+                            <x-textarea class="w-full" label="Contenido" name="contenido" wire:model.live="postEdit.content">
 
                             </x-textarea>
                             @error('postEdit.content')
@@ -117,7 +117,7 @@
 
                         <div class="mb-4">
                             <x-select class="w-full" label="Categoría" name="categoria"
-                                wire:model="postEdit.category_id">
+                                wire:model.live="postEdit.category_id">
                                 <option value="" disabled>Seleccione una categoría</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>

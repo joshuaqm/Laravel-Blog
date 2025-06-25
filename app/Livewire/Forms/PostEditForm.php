@@ -14,16 +14,16 @@ class PostEditForm extends Form
     public $open = false;
 
 
-    #[Rule('required')]
+    #[Rule('required|min:3|max:255')]
     public $title;
 
-    #[Rule('required')]
+    #[Rule('required|min:8|max:255')]
     public $slug;
 
-    #[Rule('required')]
+    #[Rule('required|min:8|max:255')]
     public $excerpt;
 
-    #[Rule('required')]
+    #[Rule('required|min:8|max:255')]
     public $content;
 
     #[Rule('required|exists:categories,id')]
