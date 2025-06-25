@@ -51,7 +51,8 @@
                     x-on:livewire-upload-progress="progress = $event.detail.progress">
 
                     <input class="w-full border-2 p-2" label="Imagen" name="image" type="file"
-                        wire:model.live="postCreate.image" accept="image/*" />
+                        wire:model.live="postCreate.image" accept="image/*"
+                        @change="progress = 0" />
 
                     <div x-show="uploading" class="mt-2">
                         <div class="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700">
@@ -79,12 +80,16 @@
             </div>
 
             <div class="flex justify-end">
-                <x-button type="submit">
+                <x-button wire:loading.class="!opacity-50 cursor-not-allowed" type="submit">
                     Guardar
                 </x-button>
 
             </div>
         </form>
+
+        <div wire:loading.delay wire:target="save">
+            Procesando... 
+        </div>
     </div>
     <div class="bg-white shadow rounded-lg p-6 dark:bg-neutral-700">
         <ul class="list-disc pl-6 space-y-2">
