@@ -23,14 +23,18 @@
             <livewire:comments />
         </div> --}}
 
+        <livewire:father />
+
+
+
         {{-- @livewire('contador', [], key('contador-1'))
  
         @livewire('contador', [], key('contador-2'))
 
         @livewire('contador', [], key('contador-3')) --}}
 
-        <livewire:contador :key="'contador-1'" />
-        <livewire:contador :key="'contador-2'" />
+        {{-- <livewire:contador :key="'contador-1'" />
+        <livewire:contador :key="'contador-2'" /> --}}
 
     </div>
 </x-layouts.app>
