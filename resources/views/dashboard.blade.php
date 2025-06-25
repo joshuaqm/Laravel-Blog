@@ -16,16 +16,21 @@
         </div>
     </div> --}}
     <div class="py-12 max-w-4xl justify-center mx-auto">
-        {{-- <livewire:counter /> --}}
-        {{-- <livewire:posts /> --}}
-        {{-- <livewire:create-post /> --}}
-        {{-- <livewire:create-post :title="'Hola mundo pasado desde la vista'" :user="'1'" /> --}}
-        {{-- <livewire:paises /> --}}
-        <livewire:formulario />
+        
+        {{-- <livewire:formulario />
         
         <div class="mt-8">
             <livewire:comments />
-        </div>
+        </div> --}}
+
+        {{-- @livewire('contador', [], key('contador-1'))
+ 
+        @livewire('contador', [], key('contador-2'))
+
+        @livewire('contador', [], key('contador-3')) --}}
+
+        <livewire:contador :key="'contador-1'" />
+        <livewire:contador :key="'contador-2'" />
 
     </div>
 </x-layouts.app>
