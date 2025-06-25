@@ -17,13 +17,13 @@
     </div> --}}
     <div class="py-12 max-w-4xl justify-center mx-auto">
         
-        {{-- <livewire:formulario />
+        <livewire:formulario lazy/>
         
         <div class="mt-8">
             <livewire:comments />
-        </div> --}}
+        </div>
 
-        <livewire:father />
+        {{-- <livewire:father /> --}}
 
 
 

@@ -12,7 +12,7 @@ use Livewire\Component;
 
 class Formulario extends Component
 {
-    public $categories, $tags;
+    public $categories, $tags; 
 
     public PostCreateForm $postCreate;
     public PostEditForm $postEdit;
@@ -39,13 +39,13 @@ class Formulario extends Component
         $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
     }
 
-    public function updating($property, $value)
-    {
-        // dd('Updating property:', $property, 'with value:', $value);
-    }
-    public function hydrate(){
-        // dd('Hydrating component');
-    }
+    // public function updating($property, $value)
+    // {
+    //     // dd('Updating property:', $property, 'with value:', $value);
+    // }
+    // public function hydrate(){
+    //     // dd('Hydrating component');
+    // }
     public function save()
     {
         // $this->postCreate->slug = 'slug-default-' . time();
