@@ -9,17 +9,19 @@ use App\Models\Post;
 use App\Models\Tag;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class Formulario extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
     public $categories, $tags; 
 
     public PostCreateForm $postCreate;
     public PostEditForm $postEdit;
 
-    public $posts;
+    // public $posts;
 
     public $open = false;
  
@@ -38,7 +40,7 @@ class Formulario extends Component
     {
         $this->categories = Category::all();
         $this->tags = Tag::all();
-        $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
+        // $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
     }
 
     // public function updating($property, $value)
@@ -84,7 +86,8 @@ class Formulario extends Component
 
         // $this->postCreate->reset();
         $this->postCreate->save();
-        $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
+        // $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
+        $this->resetPage(pageName: 'pagePosts');
         $this->dispatch('post-created', 'Nuevo articulo creado ' . time());
         // return redirect()->route('admin.posts.index')->with('message', 'Post created successfully!');
     }
@@ -128,7 +131,7 @@ class Formulario extends Component
         // $this->reset(['post_edit_id', 'post_edit', 'open']);
         $this->postEdit->update();
         $this->dispatch('post-created', 'Articulo actualizado ' . time());
-        $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
+        // $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
 
     }
 
@@ -138,12 +141,14 @@ class Formulario extends Component
         $post->tags()->detach();
         $post->delete();
         $this->dispatch('post-created', 'Articulo eliminado ' . time());
-        $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
+        // $this->posts = Post::orderBy('id', 'desc')->limit(5)->get();
 
     }
 
     public function render()
     {
-        return view('livewire.formulario');
+        $posts = Post::orderBy('id', 'desc')
+                    ->paginate(5, pageName: 'pagePosts');
+        return view('livewire.formulario', compact('posts'));
     }
 }
