@@ -15,13 +15,23 @@
             <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
         </div>
     </div> --}}
-    <div class="py-12 max-w-4xl justify-center mx-auto">
 
-        <livewire:formulario lazy />
+    <x-container>
+        Hola
+    </x-container>
+
+    <div class="py-12 max-w-4xl justify-center mx-auto">
+        <x-alert class="mt-12" type="info">
+            <x-slot name="title">
+                Título del alerta 2
+            </x-slot>
+            Hola mundo
+        </x-alert>
+        {{-- <livewire:formulario lazy />
 
         <div class="mt-8">
             <livewire:comments />
-        </div>
+        </div> --}}
 
         {{-- <livewire:father /> --}}
 
