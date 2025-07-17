@@ -10,9 +10,9 @@ use Livewire\Volt\Volt;
 
 Route::redirect('/', '/login')->name('home');
 Route::get('/pruebas', function(){
-    $cursos = Course::find(1);
+    $cursos = Course::find(14);
 
-    return $cursos;
+    return $cursos->lections;
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
