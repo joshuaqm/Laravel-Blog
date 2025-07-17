@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Section;
 use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Course;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -48,5 +50,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(20)->create();
         Post::factory(1000)->create();
         Tag::factory(20)->create();
+        Course::factory(20)->create();
+        Section::factory(20)->create();
     }
 }
