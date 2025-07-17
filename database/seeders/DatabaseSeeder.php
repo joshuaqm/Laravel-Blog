@@ -44,9 +44,9 @@ class DatabaseSeeder extends Seeder
         $user->givePermissionTo('posts.read');
         $user->givePermissionTo('posts.write');
 
-
+        User::factory(10)->create();
         Category::factory(20)->create();
-        Post::factory(100)->create();
+        Post::factory(1000)->create();
         Tag::factory(20)->create();
     }
 }

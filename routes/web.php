@@ -2,11 +2,16 @@
 
 use App\Http\Controllers\PostController;
 use App\Livewire\CreatePost;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 
 Route::redirect('/', '/login')->name('home');
+Route::get('/pruebas', function(){
+
+});
+
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 

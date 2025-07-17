@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    {{ $slot  }}
+    {{ $slot }}
 </body>
 </html>
