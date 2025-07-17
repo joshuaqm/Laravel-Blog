@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('lections', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Name of the lection
+            $table->foreignId('section_id')
+                ->constrained('sections')
+                ->onDelete('cascade'); // Foreign key to the sections table
             $table->timestamps();
         });
     }

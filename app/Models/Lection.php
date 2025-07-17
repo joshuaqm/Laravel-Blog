@@ -13,4 +13,9 @@ class Lection extends Model
     protected $fillable = [
         'name', // Name of the lection
     ];
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
 }

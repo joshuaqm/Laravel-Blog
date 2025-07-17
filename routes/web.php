@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Livewire\CreatePost;
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -9,7 +10,9 @@ use Livewire\Volt\Volt;
 
 Route::redirect('/', '/login')->name('home');
 Route::get('/pruebas', function(){
+    $cursos = Course::find(1);
 
+    return $cursos;
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

@@ -18,6 +18,7 @@ class SectionFactory extends Factory
     {
         return [
             'name' => $this->faker->word(), // Generates a random word for the section name
+            'course_id' => $this->faker->numberBetween(1, 20), // Assuming you have 20 courses, adjust as necessary
         ];
     }
 }

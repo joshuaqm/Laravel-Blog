@@ -18,6 +18,7 @@ class LectionFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(3), // Generate a random name for the lection
+            'section_id' => $this->faker->numberBetween(1, 20), // Assuming you have 20 sections, adjust as necessary
         ];
     }
 }

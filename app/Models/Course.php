@@ -14,4 +14,14 @@ class Course extends Model
         'name',
         'description',
     ];
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
+
+    public function lections()
+    {
+        return $this->hasManyThrough(Lection::class, Section::class);
+    }
 }

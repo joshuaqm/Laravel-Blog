@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Lection;
 use App\Models\Post;
 use App\Models\Section;
 use App\Models\Tag;
@@ -52,5 +53,6 @@ class DatabaseSeeder extends Seeder
         Tag::factory(20)->create();
         Course::factory(20)->create();
         Section::factory(20)->create();
+        Lection::factory(20)->create();
     }
 }
