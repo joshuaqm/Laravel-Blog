@@ -47,7 +47,8 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable')
+            ->withTimestamps();
     }
     public function category()
     {
@@ -61,6 +62,6 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphToMany(Comment::class, 'commentable');
     }
 }

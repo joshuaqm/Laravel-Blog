@@ -1,21 +1,18 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Livewire\CreatePost;
 use App\Models\Post;
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 
 Route::redirect('/', '/login')->name('home');
 Route::get('/pruebas', function(){
-    $posts = Post::find(1);
+    $course = Post::find(3);
 
-    $comments = $posts->comments()->create([
-        'content' => 'Este es un comentario de prueba'
-    ]);
-    
-    return $comments;
+    $course->tags()->attach(1); // Asocia el curso con el tag con ID 1
+    return $course;
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
