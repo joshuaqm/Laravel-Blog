@@ -10,6 +10,7 @@ use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Course;
+use App\Models\Profile;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -47,7 +48,10 @@ class DatabaseSeeder extends Seeder
         $user->givePermissionTo('posts.read');
         $user->givePermissionTo('posts.write');
 
-        User::factory(10)->create();
+        User::factory(10)->create()->each(function ($user) {
+            $user->profile()->save(Profile::factory()->make());
+        });
+
         Category::factory(20)->create();
         Post::factory(100)->create()->each(function ($post) {
             $post->images()->create([
