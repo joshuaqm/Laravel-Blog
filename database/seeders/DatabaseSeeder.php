@@ -49,7 +49,13 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
         Category::factory(20)->create();
-        Post::factory(1000)->create();
+        Post::factory(100)->create()->each(function ($post) {
+            $post->images()->create([
+                'path' => 'images/posts/' . $post->id
+            ]);
+        });
+
+
         Tag::factory(20)->create();
         Course::factory(20)->create();
         Section::factory(20)->create();
