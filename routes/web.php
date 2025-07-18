@@ -9,9 +9,13 @@ use Livewire\Volt\Volt;
 
 Route::redirect('/', '/login')->name('home');
 Route::get('/pruebas', function(){
-    $posts = Post::find(100);
+    $posts = Post::find(1);
 
-    return $posts->images;
+    $comments = $posts->comments()->create([
+        'content' => 'Este es un comentario de prueba'
+    ]);
+    
+    return $comments;
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
