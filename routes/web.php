@@ -9,10 +9,7 @@ use Livewire\Volt\Volt;
 
 Route::redirect('/', '/login')->name('home');
 Route::get('/pruebas', function(){
-    $course = Post::find(3);
-
-    $course->tags()->attach(1); // Asocia el curso con el tag con ID 1
-    return $course;
+    return view('welcome');
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
@@ -39,4 +36,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 require __DIR__.'/auth.php';
-require __DIR__.'/admin.php';
+//require __DIR__.'/admin.php';

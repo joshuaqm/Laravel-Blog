@@ -47,7 +47,7 @@ class PostController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = auth('web')->id();
 
         $post = Post::create($data);    
 
@@ -101,10 +101,10 @@ class PostController extends Controller
 
         if($request->hasFile('image')) {
             if($post->image_path) {
-                Storage::delete($post->image_path);
+                Storage::disk('public')->delete($post->image_path);
             }
 
-            $data['image_path'] = Storage::put('posts', $request->image);
+            $data['image_path'] = Storage::disk('public')->put('posts', $request->image);
         }
         $post->tags()->sync($data['tags'] ?? []);
 
@@ -122,20 +122,20 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Post $post)
-    {
-        if($post->image_path) {
-            Storage::delete($post->image_path);
-        }
-
-        $post->tags()->detach();
-        $post->delete();
-
-        session()->flash('swal',[
-            'icon' => 'success',
-            'title' => '¡Bien hecho!',
-            'text' => 'El post ha sido eliminado correctamente.',
-        ]);
-
-        return redirect()->route('admin.posts.index');
+{
+    if($post->image_path) {
+        Storage::disk('public')->delete($post->image_path);
     }
+
+    $post->tags()->detach();
+    $post->delete();
+
+    session()->flash('swal',[
+        'icon' => 'success',
+        'title' => '¡Bien hecho!',
+        'text' => 'El post ha sido eliminado correctamente.',
+    ]);
+
+    return redirect()->route('admin.posts.index');
+}
 }
