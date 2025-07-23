@@ -74,6 +74,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {   
         $categories = Category::all();
+        // $tags = $post->tags->pluck('id')->toArray();
         $tags = Tag::all();
         return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
@@ -91,7 +92,7 @@ class PostController extends Controller
             'content' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'tags' => 'nullable|array',
-            'tags.*' => 'exists:tags,id',
+            // 'tags.*' => 'exists:tags,id',
             'is_published' => 'required|boolean',
         ]);
         //Lo cambiamos por el observer
@@ -106,7 +107,12 @@ class PostController extends Controller
 
             $data['image_path'] = Storage::disk('public')->put('posts', $request->image);
         }
-        $post->tags()->sync($data['tags'] ?? []);
+        $tags = [];
+        foreach($request->tags ?? [] as $tag){
+            $tags[] = Tag::firstOrCreate(['name' => $tag]);
+        }
+
+        $post->tags()->sync($tags);
 
         $post->update($data);
         session()->flash('swal',[
