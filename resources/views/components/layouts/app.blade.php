@@ -209,5 +209,22 @@
         @livewireScripts
 
         @stack('xd')
+
+        @if ($errors->any())
+            <script>dir
+            
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    `,
+                });
+            </script>
+        @endif
     </body>
 </html>
