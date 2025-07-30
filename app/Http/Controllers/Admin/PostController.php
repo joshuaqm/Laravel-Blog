@@ -47,7 +47,7 @@ class PostController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = auth('web')->id();
 
         $post = Post::create($data);    
 
@@ -74,6 +74,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {   
         $categories = Category::all();
+        // $tags = $post->tags->pluck('id')->toArray();
         $tags = Tag::all();
         return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
@@ -91,7 +92,7 @@ class PostController extends Controller
             'content' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'tags' => 'nullable|array',
-            'tags.*' => 'exists:tags,id',
+            // 'tags.*' => 'exists:tags,id',
             'is_published' => 'required|boolean',
         ]);
         //Lo cambiamos por el observer
@@ -101,7 +102,7 @@ class PostController extends Controller
 
         if($request->hasFile('image')) {
             if($post->image_path) {
-                Storage::delete($post->image_path);
+                Storage::disk('public')->delete($post->image_path);
             }
 
             $extension = $request->image->extension();
@@ -112,8 +113,14 @@ class PostController extends Controller
             }
 
             $data['image_path'] = Storage::putFileAs('posts', $request->file('image'), $nameFile);
+
         }
-        $post->tags()->sync($data['tags'] ?? []);
+        $tags = [];
+        foreach($request->tags ?? [] as $tag){
+            $tags[] = Tag::firstOrCreate(['name' => $tag]);
+        }
+
+        $post->tags()->sync($tags);
 
         $post->update($data);
         session()->flash('swal',[
@@ -129,20 +136,20 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Post $post)
-    {
-        if($post->image_path) {
-            Storage::delete($post->image_path);
-        }
-
-        $post->tags()->detach();
-        $post->delete();
-
-        session()->flash('swal',[
-            'icon' => 'success',
-            'title' => '¡Bien hecho!',
-            'text' => 'El post ha sido eliminado correctamente.',
-        ]);
-
-        return redirect()->route('admin.posts.index');
+{
+    if($post->image_path) {
+        Storage::disk('public')->delete($post->image_path);
     }
+
+    $post->tags()->detach();
+    $post->delete();
+
+    session()->flash('swal',[
+        'icon' => 'success',
+        'title' => '¡Bien hecho!',
+        'text' => 'El post ha sido eliminado correctamente.',
+    ]);
+
+    return redirect()->route('admin.posts.index');
+}
 }

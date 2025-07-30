@@ -2,6 +2,7 @@
 
     @push('css')
         <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     @endpush
 
     <div class="mb-8 flex justify-between items-center">
@@ -55,7 +56,7 @@
 
             {{-- <flux:textarea label="Contenido" name="content" rows="16">{{ old('content', $post->content) }}</flux:textarea> --}}
 
-            <div>
+            {{-- <div>
                 <p class="text-sm font-medium mb-1">
                     Etiquetas
                 </p>
@@ -74,6 +75,20 @@
 
                     @endforeach
                 </ul>
+            </div> --}}
+
+            <div>
+                <p class="text-sm font-medium mb-1">
+                    Etiquetas
+                </p>
+
+                <select id="tags" name="tags[]" multiple="multiple" style="width: 100%">
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->name }}" @selected(in_array($tag->name, old('tags', $post->tags->pluck('name')->toArray())))>
+                            {{ $tag->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div>
@@ -114,6 +129,22 @@
         quill.on('text-change', function() {
             document.getElementById('content').value = quill.root.innerHTML;
         });
+        </script>
+
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('#tags').select2({
+                    tags: true,
+                    tokenSeparators: [','],
+                });
+            });
         </script>
     @endpush
 </x-layouts.app>
