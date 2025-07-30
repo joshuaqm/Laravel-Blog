@@ -18,13 +18,17 @@
         @method('PUT')
 
         <div class="relative mb-2">
-            {{-- <img  class="w-full aspect-video object-cover" src="https://imgs.search.brave.com/_P-lWzE9st9gz1OY75ww4PgXSLJXPB30AKvi3VAOEzM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdDQu/ZGVwb3NpdHBob3Rv/cy5jb20vMTQ5NTM4/NTIvMjI3NzIvdi80/NTAvZGVwb3NpdHBo/b3Rvc18yMjc3MjQ5/OTItc3RvY2staWxs/dXN0cmF0aW9uLWlt/YWdlLWF2YWlsYWJs/ZS1pY29uLWZzYXQt/dmVjdG9yLmpwZw" alt=""> --}}
-            <img id="imgPreview" class="w-full aspect-video object-cover" src="{{ $post->image }}" alt="">
+            <img id="imgPreview" class="w-full aspect-video object-cover" src="{{ $post->image_path ? Storage::url($post->image_path) : 'https://as2.ftcdn.net/v2/jpg/02/51/95/53/1000_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg' }}" alt="">
             <div class="absolute top-0 right-0">
                 <label class="bg-gray-600 text-white px-4 py-2 rounded-lg cursor-pointer">
                     Cambiar imagen
                     <input type="file" name="image" class="hidden" accept="image/*" onchange="previewImage(event, '#imgPreview')">
                 </label>
+
+                <div class="bg-white"> 
+                    <a href="{{ Storage::url($post->image_path) }}" download>Descargar imagen</a>
+                </div>
+
             </div>
         </div>
 

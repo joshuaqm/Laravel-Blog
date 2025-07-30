@@ -104,7 +104,14 @@ class PostController extends Controller
                 Storage::delete($post->image_path);
             }
 
-            $data['image_path'] = Storage::put('posts', $request->image);
+            $extension = $request->image->extension();
+            $nameFile = $post->slug . '.' . $extension;
+
+            while (Storage::exists('posts/' . $nameFile)) {
+                $nameFile = str_replace('.' . $extension, '-copia.' . $extension, $nameFile);
+            }
+
+            $data['image_path'] = Storage::putFileAs('posts', $request->file('image'), $nameFile);
         }
         $post->tags()->sync($data['tags'] ?? []);
 
