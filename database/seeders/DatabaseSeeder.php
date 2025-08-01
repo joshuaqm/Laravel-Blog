@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Profile;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,8 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
+        Storage::deleteDirectory('posts');
+        Storage::makeDirectory('posts');
         // Run the roles and permissions seeder first
         $this->call(RoleAndPermissionSeeder::class);
 

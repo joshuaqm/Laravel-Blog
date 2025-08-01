@@ -26,8 +26,11 @@
                     <input type="file" name="image" class="hidden" accept="image/*" onchange="previewImage(event, '#imgPreview')">
                 </label>
 
-                <div class="bg-white"> 
-                    <a href="{{ Storage::url($post->image_path) }}" download>Descargar imagen</a>
+
+                <div class="bg-white">
+                    <a href="{{ route('prueba', ['id' => $post->id]) }}">
+                        Descargar imagen
+                    </a>
                 </div>
 
             </div>

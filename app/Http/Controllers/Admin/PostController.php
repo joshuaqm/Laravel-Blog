@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ResizeImage;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
 
 class PostController extends Controller
 {
@@ -90,7 +92,7 @@ class PostController extends Controller
             'category_id' => 'required|exists:categories,id',
             'excerpt' => 'nullable|string',
             'content' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:20480', // 20MB
             'tags' => 'nullable|array',
             // 'tags.*' => 'exists:tags,id',
             'is_published' => 'required|boolean',
@@ -108,13 +110,15 @@ class PostController extends Controller
             $extension = $request->image->extension();
             $nameFile = $post->slug . '.' . $extension;
 
-            while (Storage::exists('posts/' . $nameFile)) {
+            // CORRECCIÓN: Usar el mismo disco para verificar si existe
+            while (Storage::disk('public')->exists('posts/' . $nameFile)) {
                 $nameFile = str_replace('.' . $extension, '-copia.' . $extension, $nameFile);
             }
 
-            $data['image_path'] = Storage::putFileAs('posts', $request->file('image'), $nameFile);
-
+            $data['image_path'] = Storage::putFileAs('posts', $request->image, $nameFile);
+            ResizeImage::dispatch($data['image_path']);
         }
+
         $tags = [];
         foreach($request->tags ?? [] as $tag){
             $tags[] = Tag::firstOrCreate(['name' => $tag]);
