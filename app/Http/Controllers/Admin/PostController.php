@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\UploadedImage;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResizeImage;
 use App\Models\Category;
@@ -116,7 +117,8 @@ class PostController extends Controller
             }
 
             $data['image_path'] = Storage::putFileAs('posts', $request->image, $nameFile);
-            ResizeImage::dispatch($data['image_path']);
+            
+            UploadedImage::dispatch($data['image_path']);
         }
 
         $tags = [];
