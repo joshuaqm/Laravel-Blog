@@ -28,7 +28,7 @@ Route::get('/posts/{post}', [PostController::class, 'show'])
 
 Route::get('dashboard', function () {
     return view('dashboard'); // Esto cargará tu vista dashboard.blade.php
-})->middleware(['auth', 'verified'])
+})->middleware(['auth', 'verified', 'admin'])
   ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {

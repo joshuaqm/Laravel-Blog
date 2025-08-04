@@ -38,12 +38,12 @@
                 'can' => 'users.read',
             ],
         ],
-        'Pruebas' => [
-            'Prueba' => [
-                'name' => 'Prueba',
-                'icon' => 'rectangle-stack',
-                'url' => route('prueba'),
-                'current' => request()->routeIs('prueba'),
+        'Posts' => [
+            'Home' => [
+                'name' => 'Home',
+                'icon' => 'home',
+                'url' => route('home'),
+                'current' => request()->routeIs('home'),
                 'can' => 'users.read',
             ],
         ],
