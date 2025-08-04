@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 
@@ -26,7 +27,9 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(10);
+        $posts = Post::orderBy('id', 'desc')
+            ->where('user_id', auth('web')->id())
+            ->paginate(10);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -76,6 +79,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {   
+        Gate::authorize('author', $post);
         $categories = Category::all();
         // $tags = $post->tags->pluck('id')->toArray();
         $tags = Tag::all();

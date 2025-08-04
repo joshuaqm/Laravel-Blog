@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +26,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Paginator::useBootstrap5();
+        Gate::define('admin', function($user){
+            return $user->is_admin;
+        });
+
+        Gate::define('author', function($user, $post){
+            return $user->id === $post->user_id;
+        });
     }
 }
