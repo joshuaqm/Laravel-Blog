@@ -17,7 +17,9 @@ Route::get('/pruebas', function(){
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+Route::get('/posts/{post}', [PostController::class, 'show'])
+        ->name('posts.show');
 
 // Route::get('dashboard', CreatePost::class)
 //     ->middleware(['auth', 'verified'])

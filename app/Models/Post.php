@@ -64,4 +64,9 @@ class Post extends Model
     {
         return $this->morphToMany(Comment::class, 'commentable');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
