@@ -13,8 +13,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::where('is_published', true)
-            ->orderBy('published_at', 'desc')
-            ->paginate(10);
+            ->orderBy('id', 'desc')
+            ->paginate(5);
         return view('posts.index', compact('posts'));
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Volt\Volt;
 
 
-Route::redirect('/', '/login')->name('home');
+Route::redirect('/', '/posts')->name('home');
 
 
 Route::get('/pruebas', function(){
