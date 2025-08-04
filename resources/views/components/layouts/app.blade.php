@@ -37,6 +37,13 @@
                 'current' => request()->routeIs('admin.users.*'),
                 'can' => 'users.read',
             ],
+            'Permissions' => [
+                'name' => 'Permissions',
+                'icon' => 'key',
+                'url' => route('admin.permissions.index'),
+                'current' => request()->routeIs('admin.permissions.*'),
+                'can' => 'permissions.read',
+            ],
         ],
         'Posts' => [
             'Home' => [
@@ -87,11 +94,11 @@
                 @foreach ($groups as $group => $links)
                     <flux:navlist.group :heading="$group" class="grid">
                         @foreach ($links as $link)
-                            @can($link['can'] ?? true)
+                            {{-- @can($link['can'] ?? true) --}}
                                 <flux:navlist.item :icon="$link['icon']" :href="$link['url']" :current="$link['current']" wire:navigate.hover>
                                     {{ $link['name'] }}
                                 </flux:navlist.item>
-                            @endcan
+                            {{-- @endcan --}}
                         @endforeach
                     </flux:navlist.group>
                 @endforeach

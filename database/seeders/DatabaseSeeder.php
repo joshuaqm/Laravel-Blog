@@ -25,31 +25,31 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('posts');
         Storage::makeDirectory('posts');
         // Run the roles and permissions seeder first
-        $this->call(RoleAndPermissionSeeder::class);
+        // $this->call(RoleAndPermissionSeeder::class);
 
         $user = User::factory()->create([
             'name' => 'Joshua M',
             'email' => 'joshuaqm@correo.com',
             'password' => bcrypt('proteco123'),
         ]);
-        $user->givePermissionTo('posts.read');
-        $user->givePermissionTo('posts.write');
-        $user->givePermissionTo('tags.read');
-        $user->givePermissionTo('tags.write');
-        $user->givePermissionTo('users.read');
-        $user->givePermissionTo('users.write');
-        $user->givePermissionTo('categories.read');
-        $user->givePermissionTo('categories.write');
+        // $user->givePermissionTo('posts.read');
+        // $user->givePermissionTo('posts.write');
+        // $user->givePermissionTo('tags.read');
+        // $user->givePermissionTo('tags.write');
+        // $user->givePermissionTo('users.read');
+        // $user->givePermissionTo('users.write');
+        // $user->givePermissionTo('categories.read');
+        // $user->givePermissionTo('categories.write');
 
         $user = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@correo.com',
             'password' => bcrypt('proteco123'),
         ]);
-        $user->givePermissionTo('categories.read');
-        $user->givePermissionTo('categories.write');
-        $user->givePermissionTo('posts.read');
-        $user->givePermissionTo('posts.write');
+        // $user->givePermissionTo('categories.read');
+        // $user->givePermissionTo('categories.write');
+        // $user->givePermissionTo('posts.read');
+        // $user->givePermissionTo('posts.write');
 
         User::factory(10)->create()->each(function ($user) {
             $user->profile()->save(Profile::factory()->make());
@@ -67,5 +67,7 @@ class DatabaseSeeder extends Seeder
         Course::factory(20)->create();
         Section::factory(20)->create();
         Lection::factory(20)->create();
+
+        $this->call(PermissionSeeder::class);
     }
 }
