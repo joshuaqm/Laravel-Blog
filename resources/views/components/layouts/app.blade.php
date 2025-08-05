@@ -30,13 +30,6 @@
             ],        
         ],
         'Management' => [
-            'Users' => [
-                'name' => 'Users',
-                'icon' => 'user',
-                'url' => route('admin.users.index'),
-                'current' => request()->routeIs('admin.users.*'),
-                'can' => 'users.read',
-            ],
             'Permissions' => [
                 'name' => 'Permissions',
                 'icon' => 'key',
@@ -50,6 +43,13 @@
                 'url' => route('admin.roles.index'),
                 'current' => request()->routeIs('admin.roles.*'),
                 'can' => 'roles.read',
+            ],
+            'Users' => [
+                'name' => 'Users',
+                'icon' => 'user',
+                'url' => route('admin.users.index'),
+                'current' => request()->routeIs('admin.users.*'),
+                'can' => 'users.read',
             ],
         ],
         'Posts' => [

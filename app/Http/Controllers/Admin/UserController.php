@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -23,7 +24,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::all();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -34,29 +36,20 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
+            'roles' => 'nullable|array',
+            'roles.*' => 'exists:roles,id',
         ]);
+
+        $data['password'] = bcrypt($data['password']);
 
         // Crear usuario
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'email_verified_at' => now(),
-        ]);
+        $user = User::create($data);
 
-        // Asignar permisos desde los checkboxes
-        $permissions = [];
-        foreach ($request->input('permissions', []) as $section => $types) {
-            foreach ($types as $type => $enabled) {
-                if ($enabled) {
-                    $permissions[] = "{$section}.{$type}";
-                }
-            }
+        // Asignar roles desde los checkboxes
+        if (isset($data['roles'])) {
+            $user->roles()->attach($data['roles']);
         }
-
-        $user->syncPermissions($permissions); // Asigna y sincroniza todos los permisos
-
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡El usuario ha sido creado!',
@@ -78,8 +71,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $user = User::with( 'permissions')->findOrFail($user->id);
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::all();        
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -92,23 +85,16 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8',
         ]);
-        $permissions = [];
-        foreach ($request->input('permissions', []) as $section => $types) {
-            foreach ($types as $type => $enabled) {
-                if ($enabled) {
-                    $permissions[] = "{$section}.{$type}";
-                }
-            }
-        }
-        $user->update($data);
 
-        $user->syncPermissions($permissions); // Asigna y sincroniza todos los permisos
+        $user->update($data);
+        $user->roles()->sync($request->input('roles', []));
+
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡El usuario ha sido actualizado!',
             'text' => 'Ahora puedes gestionar este usuario desde el panel de administración.',
         ]);
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.edit', $user);
     }
 
     /**
@@ -116,7 +102,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if ($user->id === auth()->id()) {
+        if ($user->id === auth('web')->id()) {
             session()->flash('swal', [
                 'icon' => 'error',
                 'title' => '¡No puedes eliminarte a ti mismo!',
