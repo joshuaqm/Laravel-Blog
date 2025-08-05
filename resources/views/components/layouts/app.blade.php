@@ -12,22 +12,22 @@
                 'icon' => 'funnel',
                 'url' => route('admin.categories.index'),
                 'current' => request()->routeIs('admin.categories.*'),
-                'can' => 'categories.read',
+                'can' => 'manage categories',
             ],
             [
                 'name' => 'Posts',
                 'icon' => 'newspaper',
                 'url' => route('admin.posts.index'),
                 'current' => request()->routeIs('admin.posts.*'),
-                'can' => 'posts.read',
+                'can' => 'manage posts',
             ],
             [
                 'name' => 'Tags',
                 'icon' => 'tag',
                 'url' => route('admin.tags.index'),
                 'current' => request()->routeIs('admin.tags.*'),
-                'can' => 'tags.read',
-            ],        
+                'can' => 'manage tags',
+            ],
         ],
         'Management' => [
             'Permissions' => [
@@ -35,21 +35,21 @@
                 'icon' => 'key',
                 'url' => route('admin.permissions.index'),
                 'current' => request()->routeIs('admin.permissions.*'),
-                'can' => 'permissions.read',
+                'can' => 'manage permissions',
             ],
             'Roles' => [
                 'name' => 'Roles',
                 'icon' => 'shield-check',
                 'url' => route('admin.roles.index'),
                 'current' => request()->routeIs('admin.roles.*'),
-                'can' => 'roles.read',
+                'can' => 'manage roles',
             ],
             'Users' => [
                 'name' => 'Users',
                 'icon' => 'user',
                 'url' => route('admin.users.index'),
                 'current' => request()->routeIs('admin.users.*'),
-                'can' => 'users.read',
+                'can' => 'manage users',
             ],
         ],
         'Posts' => [
@@ -58,7 +58,7 @@
                 'icon' => 'home',
                 'url' => route('home'),
                 'current' => request()->routeIs('home'),
-                'can' => 'users.read',
+                'can' => 'manage posts',
             ],
         ],
     ];
@@ -101,11 +101,11 @@
                 @foreach ($groups as $group => $links)
                     <flux:navlist.group :heading="$group" class="grid">
                         @foreach ($links as $link)
-                            {{-- @can($link['can'] ?? true) --}}
+                            @can($link['can'] ?? true)
                                 <flux:navlist.item :icon="$link['icon']" :href="$link['url']" :current="$link['current']" wire:navigate.hover>
                                     {{ $link['name'] }}
                                 </flux:navlist.item>
-                            {{-- @endcan --}}
+                            @endcan
                         @endforeach
                     </flux:navlist.group>
                 @endforeach
