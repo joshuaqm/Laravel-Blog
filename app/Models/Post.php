@@ -40,17 +40,33 @@ class Post extends Model
         ); 
     }
     // Route Model Binding
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable')
+            ->withTimestamps();
     }
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function comments()
+    {
+        return $this->morphToMany(Comment::class, 'commentable');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

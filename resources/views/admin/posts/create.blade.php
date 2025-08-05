@@ -17,7 +17,7 @@
             <flux:input name="content" label="Contenido del post" value="{{ old('content') }}"  placeholder="Ingrese el contenido del post" /> --}}
             <flux:select name="category_id" label="Categoría" placeholder="Seleccione una categoría...">
                 @foreach ($categories as $category)
-                    <flux:select.option value="{{ $category->id }}">
+                    <flux:select.option value="{{ $category->name }}">
                         {{ $category->name }}
                     </flux:select.option>
                 @endforeach

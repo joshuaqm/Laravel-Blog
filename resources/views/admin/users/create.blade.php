@@ -14,8 +14,25 @@
             <flux:input name="name" label="Nombre" value="{{ old('name') }}"  placeholder="Ingrese el nombre del usuario" />
             <flux:input name="email" label="Correo" value="{{ old('email') }}"  placeholder="Ingrese el correo del usuario" />
             <flux:input name="password" type="password" value="{{ old('password') }}" label="Contraseña" placeholder="Ingrese la contraseña del usuario" />
-
-            <h1 class="text-lg font-bold">Permisos</h1>
+            <flux:input name="password_confirmation" type="password" value="{{ old('password_confirmation') }}" label="Confirmar contraseña" placeholder="Confirme la contraseña del usuario" />
+            <div>
+                <p class="text-sm font-medium my-4">Roles</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <ul>
+                        @foreach ($roles as $role)
+                            <li>
+                                <label class="flex items-center">
+                                    <input 
+                                        type="checkbox" name="roles[]" value="{{ $role->id }}" class="mr-2"
+                                        @checked(in_array($role->id, old('roles', [])))>
+                                    <span class="ml-2">{{ $role->name }}</span>
+                                </label>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            {{-- <h1 class="text-lg font-bold">Permisos</h1>
             <div class="flex flex-col space-y-4">
                 <table>
                     <thead>
@@ -80,7 +97,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
 
             <div class="flex justify-end">
                 <flux:button type="submit" class="mt-4 cursor-pointer" variant="primary" color="sky">

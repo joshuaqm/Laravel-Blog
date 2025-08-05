@@ -1,23 +1,35 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Livewire\CreatePost;
+use App\Models\Post;
+use App\Models\Course;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Volt\Volt;
 
 
-Route::redirect('/', '/login')->name('home');
+Route::redirect('/', '/posts')->name('home');
+
+
+Route::get('/pruebas', function(){
+    return view('welcome');
+});
+
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+Route::get('/posts/{post}', [PostController::class, 'show'])
+        ->name('posts.show');
 
 // Route::get('dashboard', CreatePost::class)
 //     ->middleware(['auth', 'verified'])
 //     ->name('dashboard');
-Route::view('/prueba', 'prueba')->name('prueba');
+
 
 Route::get('dashboard', function () {
     return view('dashboard'); // Esto cargará tu vista dashboard.blade.php
-})->middleware(['auth', 'verified'])
+// })->middleware(['auth', 'verified', 'admin'])
+})->middleware(['auth', 'verified', 'can:access dashboard'])
   ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
@@ -30,5 +42,15 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+Route::get('/prueba', function(Request $request) {
+    $post = Post::findOrFail($request->query('id'));
+
+    if (!$post->image_path || !Storage::exists($post->image_path)) {
+        return back()->with('alert', 'Image not found or does not exist.');
+    }
+    return Storage::download($post->image_path);
+})->name('prueba');
+
+
 require __DIR__.'/auth.php';
-require __DIR__.'/admin.php';
+//require __DIR__.'/admin.php';

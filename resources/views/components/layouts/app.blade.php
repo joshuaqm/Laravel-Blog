@@ -12,39 +12,53 @@
                 'icon' => 'funnel',
                 'url' => route('admin.categories.index'),
                 'current' => request()->routeIs('admin.categories.*'),
-                'can' => 'categories.read',
+                'can' => 'manage categories',
             ],
             [
                 'name' => 'Posts',
                 'icon' => 'newspaper',
                 'url' => route('admin.posts.index'),
                 'current' => request()->routeIs('admin.posts.*'),
-                'can' => 'posts.read',
+                'can' => 'manage posts',
             ],
             [
                 'name' => 'Tags',
                 'icon' => 'tag',
                 'url' => route('admin.tags.index'),
                 'current' => request()->routeIs('admin.tags.*'),
-                'can' => 'tags.read',
-            ],        
+                'can' => 'manage tags',
+            ],
         ],
         'Management' => [
+            'Permissions' => [
+                'name' => 'Permissions',
+                'icon' => 'key',
+                'url' => route('admin.permissions.index'),
+                'current' => request()->routeIs('admin.permissions.*'),
+                'can' => 'manage permissions',
+            ],
+            'Roles' => [
+                'name' => 'Roles',
+                'icon' => 'shield-check',
+                'url' => route('admin.roles.index'),
+                'current' => request()->routeIs('admin.roles.*'),
+                'can' => 'manage roles',
+            ],
             'Users' => [
                 'name' => 'Users',
                 'icon' => 'user',
                 'url' => route('admin.users.index'),
                 'current' => request()->routeIs('admin.users.*'),
-                'can' => 'users.read',
+                'can' => 'manage users',
             ],
         ],
-        'Pruebas' => [
-            'Prueba' => [
-                'name' => 'Prueba',
-                'icon' => 'rectangle-stack',
-                'url' => route('prueba'),
-                'current' => request()->routeIs('prueba'),
-                'can' => 'users.read',
+        'Posts' => [
+            'Home' => [
+                'name' => 'Home',
+                'icon' => 'home',
+                'url' => route('home'),
+                'current' => request()->routeIs('home'),
+                'can' => 'manage posts',
             ],
         ],
     ];
@@ -209,5 +223,22 @@
         @livewireScripts
 
         @stack('xd')
+
+        @if ($errors->any())
+            <script>dir
+            
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    `,
+                });
+            </script>
+        @endif
     </body>
 </html>

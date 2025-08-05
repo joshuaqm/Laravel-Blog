@@ -2,6 +2,7 @@
 
     @push('css')
         <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     @endpush
 
     <div class="mb-8 flex justify-between items-center">
@@ -18,13 +19,20 @@
         @method('PUT')
 
         <div class="relative mb-2">
-            {{-- <img  class="w-full aspect-video object-cover" src="https://imgs.search.brave.com/_P-lWzE9st9gz1OY75ww4PgXSLJXPB30AKvi3VAOEzM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdDQu/ZGVwb3NpdHBob3Rv/cy5jb20vMTQ5NTM4/NTIvMjI3NzIvdi80/NTAvZGVwb3NpdHBo/b3Rvc18yMjc3MjQ5/OTItc3RvY2staWxs/dXN0cmF0aW9uLWlt/YWdlLWF2YWlsYWJs/ZS1pY29uLWZzYXQt/dmVjdG9yLmpwZw" alt=""> --}}
-            <img id="imgPreview" class="w-full aspect-video object-cover" src="{{ $post->image }}" alt="">
+            <img id="imgPreview" class="w-full aspect-video object-cover" src="{{ $post->image_path ? Storage::url($post->image_path) : 'https://as2.ftcdn.net/v2/jpg/02/51/95/53/1000_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg' }}" alt="">
             <div class="absolute top-0 right-0">
                 <label class="bg-gray-600 text-white px-4 py-2 rounded-lg cursor-pointer">
                     Cambiar imagen
                     <input type="file" name="image" class="hidden" accept="image/*" onchange="previewImage(event, '#imgPreview')">
                 </label>
+
+
+                <div class="bg-white">
+                    <a href="{{ route('prueba', ['id' => $post->id]) }}">
+                        Descargar imagen
+                    </a>
+                </div>
+
             </div>
         </div>
 
@@ -51,7 +59,7 @@
 
             {{-- <flux:textarea label="Contenido" name="content" rows="16">{{ old('content', $post->content) }}</flux:textarea> --}}
 
-            <div>
+            {{-- <div>
                 <p class="text-sm font-medium mb-1">
                     Etiquetas
                 </p>
@@ -70,6 +78,20 @@
 
                     @endforeach
                 </ul>
+            </div> --}}
+
+            <div>
+                <p class="text-sm font-medium mb-1">
+                    Etiquetas
+                </p>
+
+                <select id="tags" name="tags[]" multiple="multiple" style="width: 100%">
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->name }}" @selected(in_array($tag->name, old('tags', $post->tags->pluck('name')->toArray())))>
+                            {{ $tag->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div>
@@ -110,6 +132,22 @@
         quill.on('text-change', function() {
             document.getElementById('content').value = quill.root.innerHTML;
         });
+        </script>
+
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('#tags').select2({
+                    tags: true,
+                    tokenSeparators: [','],
+                });
+            });
         </script>
     @endpush
 </x-layouts.app>
