@@ -1,14 +1,11 @@
-<x-layouts.app :title="__('Posts')">
+<x-layouts.app :title="__('Roles')">
     <div class="mb-8 flex justify-between items-center">
         <flux:breadcrumbs>
             <flux:breadcrumbs.item href="{{ route('dashboard') }}" icon="home" />
-            <flux:breadcrumbs.item href="{{ route('admin.posts.index') }}">Posts</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('admin.roles.index') }}">Roles</flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
-        
-        {{-- @can('posts.write') --}}
-            <a href="{{ route('admin.posts.create') }}" class="btn btn-blue">Add Post</a>
-        {{-- @endcan --}}
+        <a href="{{ route('admin.roles.create') }}" class="btn btn-blue">Agregar rol</a>
     </div>
 
     <div class="relative overflow-x-auto">
@@ -19,29 +16,29 @@
                         ID
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Title
+                        Name
                     </th>
                     <th scope="col" class="px-6 py-3" width="10px">
-                        Actions
+                        Options
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($posts as $post)
+                @foreach ($roles as $role)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $post->id }}
+                            {{ $role->id }}
                         </th>
                         <td class="px-6 py-4">
-                            {{ $post->title }}
+                            {{ $role->name }}
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">
-                                <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-blue text-xs">
+                                <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-blue text-xs">
                                     Editar
                                 </a>
-                                <form class="delete-form" action="{{ route('admin.posts.destroy', $post) }}"
+                                <form class="delete-form" action="{{ route('admin.roles.destroy', $role) }}"
                                     method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -57,10 +54,6 @@
             </tbody>
         </table>
     </div>
-    <div class="mt-4">
-        {{ $posts->links() }}
-    </div>
-
     @push('js')
         <script>
             forms = document.querySelectorAll('.delete-form');

@@ -22,11 +22,11 @@ class PostFactory extends Factory
             'slug' => $this->faker->unique()->slug(),
             'excerpt' => $this->faker->text(200),
             'content' => $this->faker->text(3000),
-            'user_id' => 1,
+            'user_id' => \App\Models\User::all()->random()->id,
             'category_id' => Category::all()->random()->id,
             
             'is_published' => true,
-            'published_at' => now() ,
+            'published_at' => now(),
         ];
     }
 }

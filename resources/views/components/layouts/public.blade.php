@@ -107,11 +107,11 @@
                             <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
                         </flux:menu.radio.group>
 
-                        @can('admin')
+                        {{-- @can('admin') --}}
                             <flux:menu.radio.group>
                                 <flux:menu.item :href="route('dashboard')" icon="key" wire:navigate>{{ __('Dashboard') }}</flux:menu.item>
                             </flux:menu.radio.group>
-                        @endcan
+                        {{-- @endcan --}}
 
                         <flux:menu.separator />
 

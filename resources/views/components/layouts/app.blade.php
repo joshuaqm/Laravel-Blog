@@ -44,6 +44,13 @@
                 'current' => request()->routeIs('admin.permissions.*'),
                 'can' => 'permissions.read',
             ],
+            'Roles' => [
+                'name' => 'Roles',
+                'icon' => 'shield-check',
+                'url' => route('admin.roles.index'),
+                'current' => request()->routeIs('admin.roles.*'),
+                'can' => 'roles.read',
+            ],
         ],
         'Posts' => [
             'Home' => [

@@ -69,5 +69,6 @@ class DatabaseSeeder extends Seeder
         Lection::factory(20)->create();
 
         $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
     }
 }

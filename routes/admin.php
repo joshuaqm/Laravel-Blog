@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Models\Category;
@@ -84,3 +85,4 @@ Route::resource('posts', PostController::class);
 Route::resource('tags', TagController::class);
 Route::resource('users', UserController::class);
 Route::resource('permissions', PermissionController::class);
+Route::resource('roles', RoleController::class);
