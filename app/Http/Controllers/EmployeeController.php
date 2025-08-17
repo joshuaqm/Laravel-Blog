@@ -11,7 +11,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return "hola";
+        return view('pruebas.employees.index');
     }
 
     /**
