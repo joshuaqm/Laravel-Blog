@@ -18,6 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group(function () {
                     require base_path('routes/admin.php');
                 });
+            Route::middleware('web', 'auth')
+                ->prefix('prueba')
+                ->name('prueba')
+                ->group(function(){
+                    require base_path('routes/pruebas.php');
+                });
         }
         // then: function () {
         //     Route::middleware('web')
@@ -25,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //         ->group(base_path('routes/admin.php'));
         // }
     )
+    
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => IsAdmin::class,
