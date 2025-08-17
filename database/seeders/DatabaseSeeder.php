@@ -27,11 +27,16 @@ class DatabaseSeeder extends Seeder
         // Run the roles and permissions seeder first
         // $this->call(RoleAndPermissionSeeder::class);
 
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
+
         $user = User::factory()->create([
             'name' => 'Joshua M',
             'email' => 'joshuaqm@correo.com',
             'password' => bcrypt('proteco123'),
         ]);
+
+        $user->assignRole('admin');
         // $user->givePermissionTo('posts.read');
         // $user->givePermissionTo('posts.write');
         // $user->givePermissionTo('tags.read');
@@ -68,7 +73,6 @@ class DatabaseSeeder extends Seeder
         Section::factory(20)->create();
         Lection::factory(20)->create();
 
-        $this->call(PermissionSeeder::class);
-        $this->call(RoleSeeder::class);
+        
     }
 }
