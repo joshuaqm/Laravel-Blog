@@ -19,10 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
                     require base_path('routes/admin.php');
                 });
             Route::middleware('web', 'auth')
-                ->prefix('prueba')
-                ->name('prueba')
+                ->prefix('test')
+                ->name('test.')
                 ->group(function(){
-                    require base_path('routes/pruebas.php');
+                    require base_path('routes/test.php');
                 });
         }
         // then: function () {
