@@ -25,6 +25,9 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('posts');
         Storage::makeDirectory('posts');
         // Run the roles and permissions seeder first
+
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
         // $this->call(RoleAndPermissionSeeder::class);
 
         $user = User::factory()->create([
@@ -32,6 +35,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'joshuaqm@correo.com',
             'password' => bcrypt('proteco123'),
         ]);
+
+        $user->assignRole('admin');
         // $user->givePermissionTo('posts.read');
         // $user->givePermissionTo('posts.write');
         // $user->givePermissionTo('tags.read');
@@ -68,7 +73,5 @@ class DatabaseSeeder extends Seeder
         Section::factory(20)->create();
         Lection::factory(20)->create();
 
-        $this->call(PermissionSeeder::class);
-        $this->call(RoleSeeder::class);
     }
 }
