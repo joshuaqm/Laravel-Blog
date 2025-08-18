@@ -10,6 +10,7 @@ use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Course;
+use App\Models\Employee;
 use App\Models\Profile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         // $this->call(RoleAndPermissionSeeder::class);
+
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
 
         $user = User::factory()->create([
             'name' => 'Joshua M',
@@ -73,5 +77,7 @@ class DatabaseSeeder extends Seeder
         Section::factory(20)->create();
         Lection::factory(20)->create();
 
+        Employee::factory(100)->create();
+        
     }
 }
